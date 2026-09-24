@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="How to Fix Node.js 20 Actions Are Deprecated GitHub Actions. Complete step-by-step guide to updating actions, resolving warnings, and ensuring Node.js 24 compatibility.">
+    <title>How to Fix Node.js 20 Actions Are Deprecated GitHub Actions</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --primary-text: #c9d1d9;
+            --heading-color: #f0f6fc;
+            --accent-color: #2f81f7;
+            --accent-hover: #58a6ff;
+            --button-bg: #238636;
+            --button-hover: #2ea043;
+            --table-header: #21262d;
+            --table-row-alt: #161b22;
+            --code-bg: #1f242c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--primary-text);
+        }
+
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            background-color: var(--card-bg);
+            padding: 40px 60px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--heading-color);
+            font-size: 2.4rem;
+            line-height: 1.3;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        h2 {
+            color: var(--heading-color);
+            font-size: 1.75rem;
+            margin-top: 35px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: var(--accent-hover);
+            font-size: 1.3rem;
+            margin-top: 22px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+        }
+
+        ul, ol {
+            margin-bottom: 25px;
+            padding-left: 25px;
+            font-size: 1.05rem;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: var(--heading-color);
+        }
+
+        a {
+            color: var(--accent-hover);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .cta-box {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--accent-color);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 6px;
+        }
+
+        .cta-box h3 {
+            margin-top: 0;
+            color: var(--heading-color);
+        }
+
+        .cta-container {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .action-btn {
+            display: inline-block;
+            background-color: var(--button-bg);
+            color: #ffffff;
+            padding: 16px 36px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
+            font-size: 1.2rem;
+            transition: background-color 0.2s ease;
+            text-align: center;
+        }
+
+        .action-btn:hover {
+            background-color: var(--button-hover);
+            text-decoration: none;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 25px 0;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 1.05rem;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            border: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--table-header);
+            color: var(--heading-color);
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--table-row-alt);
+        }
+
+        .toc-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background-color: var(--bg-color);
+        }
+
+        .toc-table td {
+            border: 1px solid var(--border-color);
+            padding: 14px 18px;
+            text-align: center;
+            width: 50%;
+        }
+
+        .toc-table a {
+            text-decoration: none;
+            color: var(--accent-hover);
+            font-weight: bold;
+            font-size: 1.05rem;
+        }
+
+        .toc-table a:hover {
+            text-decoration: underline;
+        }
+
+        .faq-item {
+            margin-bottom: 18px;
+            background-color: var(--bg-color);
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .faq-item h3 {
+            margin-top: 0;
+        }
+
+        pre {
+            background-color: var(--bg-color);
+            color: var(--heading-color);
+            padding: 18px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            line-height: 1.45;
+        }
+
+        code {
+            background-color: #21262d;
+            color: #f0f6fc;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                padding: 30px 30px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            .action-btn {
+                width: 100%;
+            }
+
+            .toc-table td {
+                display: block;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>How to Fix Node.js 20 Actions Are Deprecated GitHub Actions</h1>
+
+    <!-- Table of Contents (2 Rows, Full Width, Fully Functional) -->
+    <table class="toc-table">
+        <tr>
+            <td><a href="#overview">1. What Causes the Error?</a></td>
+            <td><a href="#step-by-step">2. Step-by-Step Solution</a></td>
+        </tr>
+        <tr>
+            <td><a href="#best-practices">3. Best Practices</a></td>
+            <td><a href="#faq">4. Frequently Asked Questions</a></td>
+        </tr>
+    </table>
+
+    <!-- CTA Button (Center Aligned above Paragraph) -->
+    <div class="cta-container">
+        <a href="#download" class="action-btn">DOWNLOAD MIRROR/FILE</a>
+    </div>
+
+    <p>⚠️ GitHub Actions reports this warning when a workflow uses an action built for the deprecated Node.js 20 runtime. Update the affected action to a Node.js 24-compatible release, such as newer major versions of official actions. As of September 23, 2026, GitHub has removed Node.js 20 from its runners, so upgrading the action is the permanent fix.</p>
+
+    <h2 id="overview">What Causes the "Node.js 20 Actions Are Deprecated" Error?</h2>
+    <p>The warning is caused by the runtime used internally by a GitHub Action, not necessarily the Node.js version used by your application.</p>
+
+    <ul>
+        <li><strong>GitHub Actions runtime issue:</strong> An action in the workflow was packaged to execute with Node.js 20.</li>
+        <li><strong>Node.js 20 reached EOL:</strong> GitHub began migrating Actions from Node.js 20 to Node.js 24 because Node.js 20 reached end-of-life in April 2026.</li>
+        <li><strong>Runner-side problem:</strong> This is primarily a GitHub Actions runner/build-pipeline issue, not a browser or application runtime error.</li>
+        <li><strong>Node.js 20 is now removed:</strong> GitHub's current migration schedule lists September 23, 2026 as the Node.js 20 removal date.</li>
+    </ul>
+
+    <p>A typical warning looks like:</p>
+
+<pre>
+Node.js 20 actions are deprecated.
+
+The following actions are running on Node.js 20 and may not
+work as expected: &lt;action-name&gt;@&lt;version&gt;
+</pre>
+
+    <p>The important part is the action named in the warning. That is the component you need to investigate.</p>
+
+    <h2 id="step-by-step">Step-by-Step Solution: How to Resolve It</h2>
+
+    <h3>1. Find the Action Using Node.js 20</h3>
+    <p>Open the failed or warning-producing workflow and inspect the action named in the GitHub Actions message. For example:</p>
+
+<pre>
+steps:
+  - uses: actions/checkout@v4
+  - uses: some-org/example-action@v2
+  - run: npm test
+</pre>
+
+    <p>Do not assume that your application itself must immediately migrate from Node.js 20. The warning concerns the Action's internal execution runtime. Your workflow can separately install and run a particular Node.js version for your project.</p>
+
+    <h3>2. Check Whether a Node.js 24-Compatible Release Exists</h3>
+    <p>Look at the affected action's releases or documentation and identify its Node.js 24-compatible version. For official GitHub Actions, newer major releases have already moved to Node.js 24. For example, <code>actions/checkout v5</code> moved the action to Node.js 24, while current <code>actions/setup-node</code> releases support Node.js 24.</p>
+
+    <h3>3. Update the Action Version</h3>
+    <p>❌ <strong>The Problematic Code</strong><br>
+    A workflow might contain an older action release:</p>
+
+<pre>
+name: Node.js CI
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+      - run: npm test
+</pre>
+
+    <p>The important distinction is that the <code>node-version: 20</code> line and the action's internal Node runtime are two different things. Updating only <code>node-version: 20</code> does not necessarily remove a "Node.js 20 actions are deprecated" warning.</p>
+
+    <h3>4. Use Node.js 24-Compatible Actions</h3>
+    <p>✅ <strong>The Fixed Code</strong><br>
+    For current official GitHub Actions, use Node.js 24-compatible action releases:</p>
+
+<pre>
+name: Node.js CI
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - run: npm ci
+      - run: npm test
+</pre>
+
+    <p>Current <code>actions/setup-node</code> documentation demonstrates <code>actions/checkout@v7</code> and <code>actions/setup-node@v7</code> with Node.js 24. Current <code>setup-node</code> source also specifies Node.js 24 or newer for its own runtime.</p>
+
+    <h3>5. Understand What Changed</h3>
+    <p>The critical changes are:</p>
+
+<pre>
+- uses: actions/checkout@v4
++ uses: actions/checkout@v7
+
+- uses: actions/setup-node@v4
++ uses: actions/setup-node@v7
+
+- node-version: 20
++ node-version: 24
+</pre>
+
+    <p>However, do not blindly change every <code>node-version: 20</code> to <code>24</code>. If your application officially supports Node.js 20 and you need to keep testing it, you can still configure the project to test Node.js 20 separately. The GitHub Action itself must be compatible with the runner's supported Action runtime.</p>
+
+    <p>For example:</p>
+
+<pre>
+steps:
+  - uses: actions/checkout@v7
+
+  - uses: actions/setup-node@v7
+    with:
+      node-version: 20
+
+  - run: npm ci
+  - run: npm test
+</pre>
+
+    <p>Here, <code>setup-node</code> can run using its supported Action runtime while installing Node.js 20 for your application tests. GitHub's documentation distinguishes the Action runtime from the Node.js version installed for the workflow.</p>
+
+    <h3>6. Update Third-Party Actions Too</h3>
+    <p>The warning may come from a third-party action rather than <code>actions/checkout</code> or <code>actions/setup-node</code>. For example:</p>
+
+<pre>
+steps:
+  - uses: actions/checkout@v7
+  - uses: vendor/custom-action@v2
+</pre>
+
+    <p>If GitHub identifies <code>vendor/custom-action@v2</code> as the Node.js 20 action, changing checkout will not solve the warning. Instead:</p>
+
+    <ul>
+        <li>Identify the exact action from the warning.</li>
+        <li>Open its releases.</li>
+        <li>Look for a Node.js 24-compatible release.</li>
+        <li>Update the <code>uses:</code> reference.</li>
+        <li>Run the workflow again.</li>
+        <li>Check whether the warning disappears.</li>
+    </ul>
+
+    <p>A real GitHub issue illustrates this situation: <code>actions/add-to-project@v1.0.2</code> generated the Node.js 20 warning because that action was still running on Node.js 20.</p>
+
+    <h3>7. Check Composite and Reusable Workflows</h3>
+    <p>The problematic action may not appear directly in your main workflow. Check:</p>
+
+<pre>
+.github/workflows/
+.github/actions/
+</pre>
+
+    <p>Also inspect:</p>
+
+<pre>
+uses: ./.github/actions/my-action
+</pre>
+
+    <p>and reusable workflows such as:</p>
+
+<pre>
+uses: organization/repository/.github/workflows/build.yml@main
+</pre>
+
+    <p>A nested action can be responsible for the Node.js 20 warning even when the top-level workflow looks current.</p>
+
+    <h3>8. Temporary Runtime Override: Do Not Use This as the Final Fix</h3>
+    <p>Before Node.js 20 removal, GitHub provided a temporary opt-in mechanism for testing Node.js 24:</p>
+
+<pre>
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+</pre>
+
+    <p>GitHub also documented <code>ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true</code> as a temporary way to continue using Node.js 20 during the migration period. As of September 23, 2026, Node.js 20 has been removed from GitHub-hosted runners according to GitHub's current deprecation schedule. Therefore, a runtime override should not be treated as the permanent solution.</p>
+
+    <h2 id="best-practices">Best Practices to Prevent This Issue</h2>
+    <ul>
+        <li>Keep GitHub Actions updated and review major releases when GitHub announces a runtime migration.</li>
+        <li>Pin important actions deliberately, preferably to maintained major versions or verified commit SHAs, instead of relying on abandoned action releases.</li>
+        <li>Audit third-party and reusable actions regularly, because an outdated nested action can trigger the warning even when your main workflow is current.</li>
+    </ul>
+
+    <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+
+    <div class="faq-item">
+        <h3>Q1: Is the Node.js 20 Actions warning caused by my Node.js application?</h3>
+        <p>A: Not necessarily. The warning usually identifies a GitHub Action whose internal runtime uses Node.js 20. Your application's Node.js version and the Action's runtime are separate concerns.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Q2: Do I need to change node-version: 20 to 24?</h3>
+        <p>A: Not always. If your application still requires Node.js 20, you can use a Node.js 24-compatible GitHub Action to install and test Node.js 20. Change node-version only when your application's supported Node.js version should also change.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Q3: What is the permanent fix for "Node.js 20 actions are deprecated"?</h3>
+        <p>A: Update the specific action named in the warning to a release that supports Node.js 24. GitHub explicitly recommends that Actions users update workflows to newer action versions that run on Node.js 24.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Q4: Why does actions/setup-node not automatically fix the warning?</h3>
+        <p>A: setup-node controls the Node.js version installed for your workflow. The warning can come from another action's internal runtime. You must update the action actually identified in the warning.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Q5: Can I continue using Node.js 20 in my project?</h3>
+        <p>A: Yes, depending on your application's requirements and the tooling you use. GitHub's Node.js 20 Action deprecation concerns the runtime used by GitHub Actions themselves. It does not automatically mean your application code cannot test against Node.js 20.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Q6: Does actions/checkout need to be upgraded?</h3>
+        <p>A: If your workflow uses an older checkout release, upgrading is appropriate when that release does not support the runner's required runtime. Current actions/checkout releases include Node.js 24 support, with v5 having moved the action to Node.js 24.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Q7: Does actions/setup-node support Node.js 24?</h3>
+        <p>A: Yes. Current actions/setup-node releases support Node.js 24, and the current documentation uses actions/setup-node@v7 with node-version: '24'.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Q8: What if the action I use has no Node.js 24 version?</h3>
+        <p>A: Check the action's repository for a maintained release or migration guidance. If no compatible release exists, replace the action with a maintained alternative or update the action yourself if you own the repository.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Q9: Why did the warning suddenly become an actual workflow problem?</h3>
+        <p>A: GitHub phased the migration rather than removing Node.js 20 immediately. The runner first supported Node.js 24 and provided migration options, then Node.js 24 became the default, followed by the scheduled removal of Node.js 20. The current GitHub schedule lists September 23, 2026 for Node.js 20 removal.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Q10: What should I check if the warning remains after updating my workflow?</h3>
+        <p>A: Check every uses: entry, including third-party actions, local actions, reusable workflows, and nested workflows. The warning normally identifies the specific action still executing on Node.js 20.</p>
+    </div>
+</div>
+
+</body>
+</html>
