@@ -1,182 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JeetOpkr Tech Portal</title>
-    <style>
-        /* Base Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JeeTPKR Tech Portal - News, Fixes & Guides</title>
+  <style>
+    :root {
+      --bg-color: #0b0f19;
+      --card-bg: #151c2c;
+      --accent-color: #38bdf8;
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --border-color: #1e293b;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #0b0f17;
-            color: #e2e8f0;
-            line-height: 1.6;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
 
-        /* Header Section */
-        header {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            border-bottom: 1px solid #1e293b;
-            color: #ffffff;
-            padding: 3rem 1rem;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            position: relative;
-        }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      padding: 20px;
+      line-height: 1.6;
+    }
 
-        header::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
-        }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            color: #ffffff;
-            letter-spacing: 0.5px;
-        }
+    /* Modern Hero Header */
+    header {
+      text-align: center;
+      padding: 50px 20px;
+      margin-bottom: 35px;
+      background: radial-gradient(circle at top, #1e293b 0%, #0b0f19 80%);
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+    }
 
-        header h1 span {
-            color: #3b82f6;
-        }
+    header h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
 
-        header p {
-            font-size: 1.1rem;
-            color: #94a3b8;
-        }
+    header h1 span {
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-        /* Main Container */
-        .container {
-            max-width: 1100px;
-            margin: 2.5rem auto;
-            padding: 0 1.2rem;
-        }
+    header p {
+      color: var(--text-sub);
+      font-size: 1.1rem;
+      max-width: 620px;
+      margin: 0 auto 25px auto;
+    }
 
-        .section-title {
-            font-size: 1.6rem;
-            margin-bottom: 1.8rem;
-            color: #f8fafc;
-            display: inline-block;
-            border-bottom: 3px solid #2563eb;
-            padding-bottom: 0.3rem;
-            letter-spacing: 0.5px;
-        }
+    /* Sleek Search Bar */
+    .search-box {
+      max-width: 480px;
+      margin: 0 auto;
+    }
 
-        /* Dark Modern Cards Grid */
-        .article-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-            gap: 1.8rem;
-        }
+    .search-box input {
+      width: 100%;
+      padding: 14px 22px;
+      border-radius: 30px;
+      border: 1px solid var(--border-color);
+      background-color: #0f172a;
+      color: var(--text-main);
+      outline: none;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
 
-        .card {
-            background: #111827;
-            border-radius: 12px;
-            padding: 1.8rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border: 1px solid #1f2937;
-            position: relative;
-            overflow: hidden;
-        }
+    .search-box input:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+    }
 
-        .card:hover {
-            transform: translateY(-6px);
-            border-color: #3b82f6;
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.25);
-        }
+    /* Main Articles Grid */
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        .card h2 {
-            font-size: 1.3rem;
-            color: #f3f4f6;
-            margin-bottom: 0.8rem;
-            line-height: 1.4;
-        }
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 20px;
+      background: var(--accent-color);
+      border-radius: 2px;
+    }
 
-        .card p {
-            color: #9ca3af;
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-        }
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 25px;
+      margin-bottom: 60px;
+    }
 
-        /* Electric Blue Link Button */
-        .card a {
-            text-decoration: none;
-            color: #3b82f6;
-            font-weight: 600;
-            font-size: 0.95rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: color 0.2s, transform 0.2s;
-        }
+    .article-card {
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        .card a:hover {
-            color: #60a5fa;
-            transform: translateX(4px);
-        }
+    .article-card:hover {
+      transform: translateY(-6px);
+      border-color: #334155;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-            background-color: #070a11;
-            border-top: 1px solid #1e2937;
-            color: #64748b;
-            font-size: 0.9rem;
-        }
-    </style>
+    /* Category Badges Styling */
+    .badge {
+      display: inline-block;
+      align-self: flex-start;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .badge-nodejs { background: rgba(34, 197, 94, 0.12); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.2); }
+    .badge-nextjs { background: rgba(255, 255, 255, 0.12); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
+    .badge-react { background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.2); }
+    .badge-tailwind { background: rgba(56, 189, 248, 0.12); color: #22d3ee; border: 1px solid rgba(56, 189, 248, 0.2); }
+    .badge-prisma { background: rgba(168, 85, 247, 0.12); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.2); }
+    .badge-ai { background: rgba(251, 146, 60, 0.12); color: #fb923c; border: 1px solid rgba(251, 146, 60, 0.2); }
+    .badge-tools { background: rgba(234, 179, 8, 0.12); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.2); }
+    .badge-social { background: rgba(244, 63, 94, 0.12); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.2); }
+
+    .article-card h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .article-card p {
+      color: var(--text-sub);
+      font-size: 0.92rem;
+      margin-bottom: 22px;
+    }
+
+    .read-btn {
+      color: var(--accent-color);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s ease;
+    }
+
+    .read-btn:hover {
+      gap: 10px;
+    }
+
+    /* Categories Section Above Footer */
+    .categories-bottom-wrapper {
+      background: linear-gradient(180deg, rgba(21, 28, 44, 0.5) 0%, #151c2c 100%);
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      padding: 35px 25px;
+      margin-top: 40px;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .categories-bottom-wrapper h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .categories-bottom-wrapper p {
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      margin-bottom: 22px;
+    }
+
+    .category-filter {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background-color: #0f172a;
+      color: var(--text-sub);
+      border: 1px solid var(--border-color);
+      padding: 8px 18px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent-color);
+      color: #0b0f19;
+      border-color: var(--accent-color);
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 0;
+      color: var(--text-sub);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+    }
+  </style>
 </head>
 <body>
 
+  <div class="container">
+    <!-- Header -->
     <header>
-        <h1>JeeTPKR <span>Tech Portal</span></h1>
-        <p>Explore high-quality Github, Social Errors, Productivity Tools and Ai Prompt's articles, guides, and error solutions.</p>
+      <h1>JeeTPKR <span>Tech Portal</span></h1>
+      <p>Explore high-quality GitHub guides, Node.js solutions, Next.js, AI Prompts, and Social Error fixes.</p>
+      
+      <!-- Search Input -->
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search any topic, error or guide..." onkeyup="filterArticles()">
+      </div>
     </header>
 
-    <main class="container">
-        <h2 class="section-title">Latest Articles</h2>
+    <!-- Section Title -->
+    <div class="section-title">Latest Tech Articles</div>
 
-        <div class="article-grid">
-            
-            <!-- Article Card 1 -->
-            <div class="card">
-                <div>
-                    <h2>Fix Node.js 20 Actions Are Deprecated GitHub Actions</h2>
-                    <p>GitHub Actions reports this warning when a workflow uses an action built for the deprecated Node.js 20 runtime.</p>
-                </div>
-                <a href="/Node.js-20-actions">Read Article &rarr;</a>
-            </div>
+    <!-- Article Cards Grid -->
+    <div class="articles-grid" id="articlesGrid">
 
-            <!-- Article Card 2 -->
-            <div class="card">
-                <div>
-                    <h2>Fix Github 429 Too Many Requests</h2>
-                    <p>Check the GitHub API rate-limit headers, authenticate requests, reduce duplicate calls, and add caching/backoff instead of repeatedly retrying immediately.</p>
-                </div>
-                <a href="fix-github-429-too-many-requests">Read Article &rarr;</a>
-            </div>
+      <div class="article-card" data-category="next-js-14">
+        <div>
+          <span class="badge badge-ai">Next.JS 14</span>
+          <h2>Fix Github 429 Too Many Request</h2>
+          <p>Check the GitHub API rate-limit headers, authenticate requests, reduce duplicate calls, and add caching/backoff instead of repeatedly retrying immediately.</p>
         </div>
-    </main>
+        <a href="/fix-github-429-too-many-requests" class="read-btn">Read Article &rarr;</a>
+      </div>
 
+
+      <div class="article-card" data-category="node-js">
+        <div>
+          <span class="badge badge-nodejs">Node.Js</span>
+          <h2>Fix Node.js 20 Actions Are Deprecated GitHub Actions</h2>
+          <p>GitHub Actions reports this warning when a workflow uses an action built for the deprecated Node.js 20 runtime.</p>
+        </div>
+        <a href="/fix-node.js-20-actions" class="read-btn">Read Article &rarr;</a>
+      </div>
+
+    </div>
+
+    <!-- Categories Section Above Footer -->
+    <div class="categories-bottom-wrapper">
+      <h3>Filter Articles By Category</h3>
+      <p>Select a category to quickly filter posts according to your interest.</p>
+
+      <div class="category-filter">
+        <button class="filter-btn active" onclick="filterCategory('all', this)">All</button>
+        <button class="filter-btn" onclick="filterCategory('node-js', this)">Node.Js</button>
+        <button class="filter-btn" onclick="filterCategory('next-js-14', this)">Next.js 14</button>
+        <button class="filter-btn" onclick="filterCategory('react-issues', this)">React Issues</button>
+        <button class="filter-btn" onclick="filterCategory('tailwind-css', this)">Tailwind CSS</button>
+        <button class="filter-btn" onclick="filterCategory('prisma-issue', this)">Prisma Issue</button>
+        <button class="filter-btn" onclick="filterCategory('ai-master-prompts', this)">AI-Master Prompts</button>
+        <button class="filter-btn" onclick="filterCategory('productivity-tools', this)">Productivity Tools</button>
+        <button class="filter-btn" onclick="filterCategory('social-errors', this)">Social Errors</button>
+      </div>
+    </div>
+
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2026 JeetOpkr. All Rights Reserved.</p>
+      <p>&copy; 2026 JeeTPKR Tech Portal. All rights reserved.</p>
     </footer>
+  </div>
 
+  <script>
+    function filterCategory(category, element) {
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      element.classList.add('active');
+
+      const cards = document.querySelectorAll('.article-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function filterArticles() {
+      const searchValue = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.article-card');
+
+      cards.forEach(card => {
+        const title = card.querySelector('h2').textContent.toLowerCase();
+        const text = card.querySelector('p').textContent.toLowerCase();
+        const category = card.getAttribute('data-category').toLowerCase();
+
+        if (title.includes(searchValue) || text.includes(searchValue) || category.includes(searchValue)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
 </body>
 </html>
