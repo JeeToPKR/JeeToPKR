@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="How to Fix GitHub 429 Too Many Requests in Next.js 14 and Node.js. Learn how to authenticate API requests, inspect rate-limit headers, set up proper caching, and implement safe retry strategies.">
+    <title>How To Fix GitHub 429 Too Many Requests</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --primary-text: #c9d1d9;
+            --heading-color: #f0f6fc;
+            --accent-color: #2f81f7;
+            --accent-hover: #58a6ff;
+            --button-bg: #238636;
+            --button-hover: #2ea043;
+            --table-header: #21262d;
+            --table-row-alt: #161b22;
+            --code-bg: #1f242c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--primary-text);
+        }
+
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            background-color: var(--card-bg);
+            padding: 40px 60px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--heading-color);
+            font-size: 2.4rem;
+            line-height: 1.3;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        h2 {
+            color: var(--heading-color);
+            font-size: 1.75rem;
+            margin-top: 35px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: var(--accent-hover);
+            font-size: 1.3rem;
+            margin-top: 22px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+        }
+
+        ul, ol {
+            margin-bottom: 25px;
+            padding-left: 25px;
+            font-size: 1.05rem;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: var(--heading-color);
+        }
+
+        a {
+            color: var(--accent-hover);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .cta-box {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--accent-color);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 6px;
+        }
+
+        .cta-box h3 {
+            margin-top: 0;
+            color: var(--heading-color);
+        }
+
+        .cta-container {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .action-btn {
+            display: inline-block;
+            background-color: var(--button-bg);
+            color: #ffffff;
+            padding: 16px 36px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
+            font-size: 1.2rem;
+            transition: background-color 0.2s ease;
+            text-align: center;
+        }
+
+        .action-btn:hover {
+            background-color: var(--button-hover);
+            text-decoration: none;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 25px 0;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 1.05rem;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            border: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--table-header);
+            color: var(--heading-color);
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--table-row-alt);
+        }
+
+        .toc-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background-color: var(--bg-color);
+        }
+
+        .toc-table td {
+            border: 1px solid var(--border-color);
+            padding: 14px 18px;
+            text-align: center;
+            width: 50%;
+        }
+
+        .toc-table a {
+            text-decoration: none;
+            color: var(--accent-hover);
+            font-weight: bold;
+            font-size: 1.05rem;
+        }
+
+        .toc-table a:hover {
+            text-decoration: underline;
+        }
+
+        .faq-item {
+            margin-bottom: 18px;
+            background-color: var(--bg-color);
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .faq-item h3 {
+            margin-top: 0;
+        }
+
+        pre {
+            background-color: var(--bg-color);
+            color: var(--heading-color);
+            padding: 18px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            line-height: 1.45;
+        }
+
+        code {
+            background-color: #21262d;
+            color: #f0f6fc;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                padding: 30px 30px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            .action-btn {
+                width: 100%;
+            }
+
+            .toc-table td {
+                display: block;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>How To Fix GitHub 429 Too Many Requests</h1>
+
+    <!-- Table of Contents (2 Rows, Full Width, Fully Functional) -->
+    <table class="toc-table">
+        <tr>
+            <td><a href="#overview">1. What Causes the Error?</a></td>
+            <td><a href="#step-by-step">2. Step-by-Step Solution</a></td>
+        </tr>
+        <tr>
+            <td><a href="#best-practices">3. Best Practices</a></td>
+            <td><a href="#faq">4. Frequently Asked Questions</a></td>
+        </tr>
+    </table>
+
+    <!-- CTA Button (Center Aligned above Paragraph) -->
+    <div class="cta-container">
+        <a href="https://omg10.com/4/11681863" class="action-btn">DOWNLOAD MIRROR/FILE</a>
+    </div>
+
+    <p>⚠️ GitHub 429 Too Many Requests means your Next.js 14/Node.js backend is sending too many GitHub API requests within a rate-limit window. Check the GitHub API rate-limit headers, authenticate requests, reduce duplicate calls, and add caching/backoff instead of repeatedly retrying immediately.</p>
+
+    <h2 id="overview">What Causes the "GitHub 429 Too Many Requests" Error?</h2>
+    <p>GitHub returns a 429 Too Many Requests response when an API client exceeds an applicable request limit or is being temporarily throttled. Common causes include:</p>
+
+    <ul>
+        <li><strong>Unauthenticated API requests:</strong> Requests may have lower limits than authenticated requests.</li>
+        <li><strong>Repeated server-side requests:</strong> A Next.js API route, Server Component, cron job, or backend function may call GitHub repeatedly.</li>
+        <li><strong>Missing caching:</strong> The same GitHub repository or user data gets requested on every page load.</li>
+        <li><strong>Aggressive retries:</strong> Retrying immediately after a failed request can make throttling worse.</li>
+        <li><strong>Multiple deployments or workers:</strong> Several Node.js processes can collectively generate a high request volume.</li>
+    </ul>
+
+    <p>For a Next.js 14 + Node.js backend, this is primarily a server-side/API integration issue, although browser-side code can also trigger it when it communicates directly with GitHub.</p>
+
+    <h2 id="step-by-step">Step-by-Step Solution: How to Resolve It</h2>
+
+    <h3>1. Authenticate GitHub API Requests</h3>
+    <p>Use a GitHub token through an environment variable rather than making repeated unauthenticated requests. For example, in <code>.env.local</code>:</p>
+
+<pre>
+GITHUB_TOKEN=your_github_token
+</pre>
+
+    <p>Do not expose this token through client-side JavaScript or commit it to Git.</p>
+
+    <h3>2. Send the Token From Your Next.js Server</h3>
+    <p>A basic server-side request can look like this:</p>
+
+    <p>❌ <strong>The Problematic Code</strong></p>
+<pre>
+const response = await fetch(
+  "https://api.github.com/repos/vercel/next.js"
+);
+
+const data = await response.json();
+</pre>
+
+    <p>This request provides no authentication and can become problematic when your application sends it repeatedly.</p>
+
+    <p>✅ <strong>The Fixed Code</strong></p>
+<pre>
+const response = await fetch(
+  "https://api.github.com/repos/vercel/next.js",
+  {
+    headers: {
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      Accept: "application/vnd.github+json",
+    },
+  }
+);
+
+if (!response.ok) {
+  throw new Error(`GitHub API error: ${response.status}`);
+}
+
+const data = await response.json();
+</pre>
+
+    <p>The important changes are:</p>
+    <ul>
+        <li><code>Authorization</code> authenticates the API request.</li>
+        <li><code>Accept</code> explicitly requests GitHub's current JSON API representation.</li>
+        <li><code>response.ok</code> prevents the application from silently treating an error response as valid data.</li>
+    </ul>
+
+    <h3>3. Check GitHub's Rate-Limit Headers</h3>
+    <p>Before adding retries, inspect the response headers.</p>
+
+<pre>
+const response = await fetch("https://api.github.com/repos/vercel/next.js", {
+  headers: {
+    Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+    Accept: "application/vnd.github+json",
+  },
+});
+
+console.log("Remaining:", response.headers.get("x-ratelimit-remaining"));
+console.log("Reset:", response.headers.get("x-ratelimit-reset"));
+</pre>
+
+    <p>The <code>x-ratelimit-remaining</code> value helps determine how many requests remain for the applicable rate-limit bucket. The <code>x-ratelimit-reset</code> value provides the reset time as a Unix timestamp.</p>
+
+    <h3>4. Do Not Retry 429 Immediately</h3>
+    <p>A common mistake is creating an infinite or aggressive retry loop.</p>
+
+    <p>❌ <strong>Incorrect Retry Pattern</strong></p>
+<pre>
+async function getGithubData() {
+  const response = await fetch("https://api.github.com/repos/vercel/next.js");
+
+  if (response.status === 429) {
+    return getGithubData();
+  }
+
+  return response.json();
+}
+</pre>
+
+    <p>This can repeatedly hit the same endpoint while GitHub is throttling the client.</p>
+
+    <p>✅ <strong>Safer Retry Pattern</strong></p>
+<pre>
+async function getGithubData() {
+  const response = await fetch(
+    "https://api.github.com/repos/vercel/next.js",
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        Accept: "application/vnd.github+json",
+      },
+    }
+  );
+
+  if (response.status === 429) {
+    const retryAfter = response.headers.get("retry-after");
+
+    if (retryAfter) {
+      throw new Error(
+        `GitHub rate limit reached. Retry after ${retryAfter} seconds.`
+      );
+    }
+
+    throw new Error("GitHub rate limit reached.");
+  }
+
+  if (!response.ok) {
+    throw new Error(`GitHub API error: ${response.status}`);
+  }
+
+  return response.json();
+}
+</pre>
+
+    <p>The key difference is that the application stops instead of immediately generating another request.</p>
+
+    <h3>5. Cache GitHub Data in Next.js</h3>
+    <p>If multiple users request the same GitHub data, caching can dramatically reduce unnecessary API calls. For example:</p>
+
+<pre>
+const response = await fetch(
+  "https://api.github.com/repos/vercel/next.js",
+  {
+    headers: {
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      Accept: "application/vnd.github+json",
+    },
+    next: {
+      revalidate: 300,
+    },
+  }
+);
+
+const data = await response.json();
+</pre>
+
+    <p>Here, <code>revalidate: 300</code> tells Next.js to reuse the fetched data for a period instead of requesting the same GitHub resource for every request. For frequently accessed GitHub data, consider an application-level cache such as Redis or another shared cache when your deployment architecture requires it.</p>
+
+    <h3>6. Reduce Duplicate API Calls</h3>
+    <p>Check your application for patterns such as:</p>
+
+<pre>
+fetchGithub();
+fetchGithub();
+fetchGithub();
+</pre>
+
+    <p>Also check:</p>
+    <ul>
+        <li>React components making duplicate requests.</li>
+        <li>API routes called repeatedly by the frontend.</li>
+        <li>Cron jobs running too frequently.</li>
+        <li>Multiple server workers requesting identical data.</li>
+        <li>Pagination loops that request unnecessary pages.</li>
+        <li>Retry libraries configured with excessive attempts.</li>
+    </ul>
+
+    <p>A single backend request can often serve multiple frontend consumers.</p>
+
+    <h2 id="best-practices">Best Practices to Prevent This Issue</h2>
+    <ul>
+        <li>Cache identical GitHub API responses instead of requesting the same resource on every page request.</li>
+        <li>Authenticate GitHub API calls and keep the token exclusively on the server.</li>
+        <li>Respect rate-limit and retry information instead of using immediate recursive retries.</li>
+        <li>Monitor <code>x-ratelimit-remaining</code> so your application can detect approaching limits before requests start failing.</li>
+        <li>Request only the GitHub data your application actually needs and avoid unnecessary pagination or polling.</li>
+    </ul>
+
+    <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+
+    <div class="faq-item">
+        <h3>Q1: Is GitHub 429 a Next.js error?</h3>
+        <p>A: No. A 429 response comes from the HTTP/API service being accessed. In a Next.js application, the usual problem is excessive or repeated requests from the application to GitHub.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Q2: Does adding a GitHub token fix 429 errors?</h3>
+        <p>A: Authentication can provide a different API rate-limit allowance, but it does not make the application unlimited. Excessive authenticated requests can still encounter rate limits.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Q3: Should I keep retrying when GitHub returns 429?</h3>
+        <p>A: No. Avoid immediate retries. Respect available rate-limit or retry information and wait before making another request.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Q4: Can Next.js caching prevent GitHub 429 errors?</h3>
+        <p>A: Yes. Appropriate caching can reduce repeated requests for identical GitHub data and therefore lower API traffic.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Q5: Where should I store the GitHub token in Next.js 14?</h3>
+        <p>A: Store it in a server-side environment variable such as GITHUB_TOKEN. Do not expose it through a NEXT_PUBLIC_ variable or client-side code.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Q6: How can I check my remaining GitHub API requests?</h3>
+        <p>A: Inspect the response's x-ratelimit-remaining header. The x-ratelimit-reset header can also indicate when the applicable limit resets.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Q7: Why does GitHub return 429 even when my application has only a few users?</h3>
+        <p>A: A small user base does not necessarily mean low API traffic. Server-side loops, repeated rendering, polling, retries, multiple workers, and uncached requests can generate many GitHub requests quickly.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Q8: Can an infinite retry loop cause GitHub 429 errors?</h3>
+        <p>A: Yes. A retry loop that immediately repeats failed requests can increase request volume and prolong the rate-limiting problem. Use bounded retries with appropriate delays instead.</p>
+    </div>
+</div>
+
+</body>
+</html>
