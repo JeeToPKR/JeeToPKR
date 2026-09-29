@@ -8,14 +8,21 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- Article 1 -->
+    <!-- Article 1 -->
+  <url>
+    <loc>https://jeetopkr.com.pk/top-7-best-open-source-notion-alternatives</loc>
+    <lastmod>2026-09-29</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Article 2 -->
   <url>
     <loc>https://jeetopkr.com.pk/fix-github-429-too-many-requests</loc>
     <lastmod>2026-09-29</lastmod>
     <priority>0.8</priority>
   </url>
 
-  <!-- Article 2 -->
+  <!-- Article 3 -->
   <url>
     <loc>https://jeetopkr.com.pk/fix-nodejs-20</loc>
     <lastmod>2026-09-29</lastmod>
